@@ -65,9 +65,9 @@ function App() {
             value={bgColor}
             onChange={(e) => setBgColor(e.target.value)}
           />
-          <p>
+          <h2>
             <b>Theme</b>
-          </p>
+          </h2>
         </footer>
       </div>
     </div>
