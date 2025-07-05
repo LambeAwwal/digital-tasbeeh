@@ -11,10 +11,12 @@
     "moment-hijri": "^3.0.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^5.0.3"
   },
   "devDependencies": {
-    "typescript": "3.3.3"
+    "typescript": "3.3.3",
+    "workbox-webpack-plugin": "^7.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
