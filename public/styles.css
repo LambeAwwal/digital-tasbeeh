@@ -1,19 +1,25 @@
-/* GENERAL RESET */
-html,
-body {
-  height: 100%;
+/* RESET */
+html, body {
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* 🔒 lock horizontal scrolling */
+  overflow-y: hidden;
+  box-sizing: border-box;
 }
 
-/* APP LAYOUT */
+  font-family: sans-serif;
+}
+
+/* LAYOUT */
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-/* HIJRI BANNER */
 .hijri-banner {
   background-color: #2196f3;
   color: #fff;
@@ -24,54 +30,63 @@ body {
   width: 100%;
 }
 
-/* MAIN SCREEN */
 .screen {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0052cc;
-  position: relative;
+  flex-wrap: wrap;
+  gap: 30px;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
-/* COUNTER BODY */
+
 .counter-body {
   background-color: #000;
   border-radius: 50% 50% 100% 100%;
   border: 10px solid #0047ab;
   padding: 30px 20px;
   box-shadow: 0 0 35px #001133;
-  width: 220px;
   text-align: center;
   position: relative;
+  width: clamp(150px, 30vw, 220px);
 }
 
+
+/* DISPLAY AREA */
 .display {
-  background-color: #eee;
-  color: #000;
-  font-family: "Digital-7", monospace;
-  font-size: 36px;
-  padding: 10px 0;
-  border-radius: 6px;
-  margin-bottom: 20px;
+    background-color: #eee;
+    color: #000;
+    font-family: "Digital-7", monospace;
+    font-size: 36px;
+    padding: 10px 0;
+    border-radius: 6px;
+    margin-bottom: 20px;
 }
-
 .buttons {
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
 }
-
+/* RESET BUTTON */
 .icon-btn {
   background: white;
   border: none;
   border-radius: 50%;
-  font-size: 20px;
   width: 40px;
   height: 40px;
   cursor: pointer;
+  font-size: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* MAIN COUNTER BUTTON */
 .main-btn {
   background-color: var(--btn-bg, #0d6efd);
   transition: background-color 0.3s ease;
@@ -86,22 +101,33 @@ body {
   background-color: var(--btn-hover-bg, #0052cc);
 }
 
-input {
-  margin-top: 15px;
-  width: 45px;
-  height: 55px;
-  background: linear-gradient(#fff, #ccc);
-  border-radius: 75%;
-  border: none;
+/* THEME SWITCH */
+.theme-switch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+
+.theme-switch input[type="color"] {
+  width: 40px;
+  height: 50px;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 
+.theme-switch label {
+  font-weight: bold;
+}
+
+/* FOOTER */
 footer {
-  position: fixed;
-  bottom: 0;
-  color: white;
-  text-align: center;
   width: 100%;
+  text-align: center;
+  padding: 10px;
+  color: white;
 }
 
 /* SPLASH SCREEN */
@@ -116,6 +142,10 @@ footer {
   text-align: center;
   animation: fadeColors 3s linear infinite alternate;
   padding: 100px 20px;
+}
+img{
+  height: 200px;
+  width: 200px;
 }
 
 .splash-title {
@@ -163,7 +193,83 @@ footer {
     background-color: #0d6efd;
   }
 }
-img {
-  width: 200px;
-  height: 200px;
+
+/* RESPONSIVE BREAKPOINTS */
+
+@media (max-width: 768px) {
+  .counter-body {
+    width: 220px;
+    height: 200px;
+  }
+  .display {
+    font-size: 36px;
+    padding: 8px;
+  }
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  .main-btn {
+    width: 90px;
+    height: 90px;
+  }
+  .theme-switch input[type="color"] {
+    width: 35px;
+    height: 45px;
+  }
+  .splash-title {
+    font-size: 2rem;
+  }
+  .splash-sub {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .counter-body {
+    width: 200px;
+    height: 200px;
+  }
+  .display {
+    font-size: 36px;
+    padding: 6px;
+  }
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  .main-btn {
+    width: 75px;
+    height: 75px;
+  }
+  .theme-switch input[type="color"] {
+    width: 30px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .counter-body {
+    width: 200px;
+    height: 200px;
+  }
+  .display {
+    font-size: 36px;
+    padding: 6px;
+  }
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  .main-btn {
+    width: 75px;
+    height: 75px;
+  }
+  .theme-switch input[type="color"] {
+    width: 30px;
+    height: 40px;
+  }
 }
