@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Splash from "./Splash";
+import moment from 'moment-hijri';
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -7,26 +9,30 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [hijriDate, setHijriDate] = useState("");
 
-  useEffect(() => {
-    // Format Hijri date
+ useEffect(() => {
     const today = new Date();
-    const hijriFormatter = new Intl.DateTimeFormat("en-TN-u-ca-islamic", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
+    
+  try {
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      calendar: 'islamic'
     });
-    const formattedDate = hijriFormatter.format(today);
-    setHijriDate(formattedDate);
+    
+    const parts = formatter.formatToParts(new Date());
+    const day = parts.find(p => p.type === 'day').value;
+    const month = parts.find(p => p.type === 'month').value;
+    const year = parts.find(p => p.type === 'year').value;
+    
+    setHijriDate(`${day} ${month} ${year} AH`);
+  } catch (error) {
+    console.error("Error generating Hijri date:", error);
+    setHijriDate("Hijri Date: Could not load");
+  }
 
-    // Splash timeout
-    const splashTimeout = setTimeout(() => {
-      setShowSplash(false);
-    }, 3000);
-
-    // Clean up timeout if component unmounts
     return () => clearTimeout(splashTimeout);
   }, []);
-
   // Show splash if still active
   if (showSplash) {
     return <Splash onFinish={() => setShowSplash(false)} />;
@@ -34,7 +40,7 @@ function App() {
 
   return (
     <div className="app">
-      <div className="hijri-banner">Hijri Date: {hijriDate}</div>
+<div className="hijri-banner">Hijri Date: {hijriDate}</div>
       <div className="screen" style={{ backgroundColor: bgColor }}>
         <div className="counter-body" style={{ borderColor: bgColor }}>
           <div className="display">{String(count).padStart(4, "0")}</div>
