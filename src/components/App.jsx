@@ -9,27 +9,35 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [hijriDate, setHijriDate] = useState("");
 
- useEffect(() => {
-    const today = new Date();
+  useEffect(() => {
+    const splashTimeout = setTimeout(() => setShowSplash(false), 3000);
     
-  try {
-    const formatter = new Intl.DateTimeFormat('en-US', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      calendar: 'islamic'
-    });
-    
-    const parts = formatter.formatToParts(new Date());
-    const day = parts.find(p => p.type === 'day').value;
-    const month = parts.find(p => p.type === 'month').value;
-    const year = parts.find(p => p.type === 'year').value;
-    
-    setHijriDate(`${day} ${month} ${year} AH`);
-  } catch (error) {
-    console.error("Error generating Hijri date:", error);
-    setHijriDate("Hijri Date: Could not load");
-  }
+    try {
+      // First try moment-hijri (most reliable)
+      const hijriMoment = moment();
+      const formattedDate = `${hijriMoment.format('iD')} ${hijriMoment.format('iMMMM')} ${hijriMoment.format('iYYYY')} AH`;
+      setHijriDate(formattedDate);
+    } catch (error) {
+      console.error("Error with moment-hijri:", error);
+      try {
+        // Fallback to Intl API if moment fails
+        const formatter = new Intl.DateTimeFormat('en-US', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+          calendar: 'islamic'
+        });
+        const parts = formatter.formatToParts(new Date());
+        const day = parts.find(p => p.type === 'day').value;
+        const month = parts.find(p => p.type === 'month').value;
+        const year = parts.find(p => p.type === 'year').value;
+        setHijriDate(`${day} ${month} ${year} AH`);
+      } catch (intlError) {
+        console.error("Error with Intl API:", intlError);
+        // Final fallback
+        setHijriDate(moment().format('iD iMMMM iYYYY') + " AH");
+      }
+    }
 
     return () => clearTimeout(splashTimeout);
   }, []);
